@@ -25,8 +25,8 @@ func main() {
 	defer cancel()
 
 	r, err := c.Division(ctx, &calculator.OperationRequest{
-		FirstNumber:  20,
-		SecondNumber: 0,
+		FirstNumber:  100,
+		SecondNumber: 20,
 	})
 
 	if err != nil {

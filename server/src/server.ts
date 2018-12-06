@@ -42,7 +42,7 @@ class CalculatorServer implements ICalculatorServer {
             return callback(err, null);
         }
 
-        const response = this.calculate(call, (n1, n2) => n1 * n2);
+        const response = this.calculate(call, (n1, n2) => n1 / n2);
 
         callback(null, response)
     }
