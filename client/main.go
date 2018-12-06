@@ -24,9 +24,9 @@ func main() {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
 	defer cancel()
 
-	r, err := c.Addition(ctx, &calculator.OperationRequest{
-		FirstNumber:  10,
-		SecondNumber: 20,
+	r, err := c.Division(ctx, &calculator.OperationRequest{
+		FirstNumber:  20,
+		SecondNumber: 0,
 	})
 
 	if err != nil {

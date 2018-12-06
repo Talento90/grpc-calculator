@@ -36,7 +36,13 @@ class CalculatorServer implements ICalculatorServer {
         const response = new ResultResponse();
 
         if (call.request.getSecondnumber() === 0) {
-            return callback(new Error('Dividend is zero'), null);
+            const err: grpc.ServiceError = {
+                code: 1000,
+                name: 'OperationError',
+                message: 'Divisor is equal to zero'
+            };
+
+            return callback(err, null);
         }
 
         response.setResult(this.calculate(call, (n1, n2) => n1 / n2));
