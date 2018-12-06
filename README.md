@@ -4,22 +4,11 @@
 
 ## Installation
 
-- Install Protocol Buffers - http://google.github.io/proto-lens/installing-protoc.html / https://github.com/protocolbuffers/protobuf#protobuf-runtime-installation
-- Install gRPC Plugin - ()
+- Install Protocol Buffers - http://google.github.io/proto-lens/installing-protoc.html
 
 
 TODO: gRPC Linting
 https://github.com/ckaznocha/protoc-gen-lint
 
 
-TODO: TypeScropt Definitions
-https://github.com/improbable-eng/ts-protoc-gen
-
-
-
-Install gRPC-web
-
-- Clone: https://github.com/grpc/grpc-web
-- Install plugin: https://github.com/grpc/grpc-web#code-generator-plugin
-
-
+https://github.com/agreatfool/grpc_tools_node_protoc_ts

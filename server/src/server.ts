@@ -1,34 +1,55 @@
 import * as grpc from 'grpc';
-import { Calculator } from '../protos/calculator_pb_service';
-import * as protoLoader from '@grpc/proto-loader';
+import { ICalculatorServer, CalculatorService } from './proto/calculator_grpc_pb';
+import { OperationRequest, ResultResponse } from './proto/calculator_pb';
 
-const PROTO_PATH = __dirname + '/../../../protos/calculator.proto';
+class CalculatorServer implements ICalculatorServer {
 
-export function createGrpcServer(): grpc.Server {
-    const packageDefinition = protoLoader.loadSync(
-        PROTO_PATH,
-        {
-            keepCase: true,
-            longs: String,
-            enums: String,
-            defaults: true,
-            oneofs: true
-        });
+    private calculate(call: grpc.ServerUnaryCall<OperationRequest>, calc: (n1: number, n2: number) => number) {
+        return calc(call.request.getFirstnumber(), call.request.getSecondnumber());
+    }
 
-    const protoDescriptor = grpc.loadPackageDefinition(packageDefinition);
+    addition(call: grpc.ServerUnaryCall<OperationRequest>, callback: grpc.sendUnaryData<ResultResponse>) {
+        const response = new ResultResponse();
 
-    // The protoDescriptor object has the full package hierarchy
-    var routeguide = protoDescriptor.routeguide;
+        response.setResult(this.calculate(call, (n1, n2) => n1 + n2));
 
+        callback(null, response)
+    }
 
+    subtraction(call: grpc.ServerUnaryCall<OperationRequest>, callback: grpc.sendUnaryData<ResultResponse>) {
+        const response = new ResultResponse();
+
+        response.setResult(this.calculate(call, (n1, n2) => n1 - n2));
+
+        callback(null, response)
+    }
+
+    multiplication(call: grpc.ServerUnaryCall<OperationRequest>, callback: grpc.sendUnaryData<ResultResponse>) {
+        const response = new ResultResponse();
+
+        response.setResult(this.calculate(call, (n1, n2) => n1 * n2));
+
+        callback(null, response)
+    }
+
+    division(call: grpc.ServerUnaryCall<OperationRequest>, callback: grpc.sendUnaryData<ResultResponse>) {
+        const response = new ResultResponse();
+
+        if (call.request.getSecondnumber() === 0) {
+            return callback(new Error('Dividend is zero'), null);
+        }
+
+        response.setResult(this.calculate(call, (n1, n2) => n1 / n2));
+
+        callback(null, response)
+    }
+}
+
+export function createGrpcServer(port: string): grpc.Server {
     var server = new grpc.Server();
 
-    server.addProtoService<>(routeguide.RouteGuide.service, {
-        // getFeature: getFeature,
-        // listFeatures: listFeatures,
-        // recordRoute: recordRoute,
-        // routeChat: routeChat
-    });
+    server.addService(CalculatorService, new CalculatorServer());
+    server.bind(port, grpc.ServerCredentials.createInsecure());
 
     return server;
 }

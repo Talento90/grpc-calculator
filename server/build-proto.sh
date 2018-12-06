@@ -6,7 +6,7 @@ PROTOC_GEN_PLUGIN_PATH="./node_modules/.bin/grpc_tools_node_protoc_plugin"
 # Path to proto files
 PROTO_PATH="../proto"
 # Directory to write generated code to (.js and .d.ts files) 
-OUT_DIR="./proto"
+OUT_DIR="./src/proto"
 
 # Create Output folder
 mkdir -p ${OUT_DIR}
@@ -25,3 +25,7 @@ protoc \
 --ts_out=$OUT_DIR \
 --proto_path $PROTO_PATH \
 calculator.proto
+
+# Copy protofiles to src and dist folders
+mkdir -p dist/proto
+cp -r ./src/proto/* dist/proto
