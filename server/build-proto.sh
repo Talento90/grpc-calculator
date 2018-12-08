@@ -1,14 +1,19 @@
 #!/usr/bin/env bash
 
-# Path to this plugin
+# Path to plugins
+
+# Plugin to generate JS code from Protofiles
+PROTOC_GEN_PLUGIN_PATH="./node_modules/.bin/grpc_tools_node_protoc_plugin" 
+# Plugin to generate TS definitions from the generated JS
 PROTOC_GEN_TS_PATH="./node_modules/.bin/protoc-gen-ts"
-PROTOC_GEN_PLUGIN_PATH="./node_modules/.bin/grpc_tools_node_protoc_plugin"
+
 # Path to proto files
 PROTO_PATH="../proto"
 # Directory to write generated code to (.js and .d.ts files) 
 OUT_DIR="./src/proto"
 
 # Create Output folder
+rm -rf ${OUT_DIR}
 mkdir -p ${OUT_DIR}
 
 # JavaScript code generating

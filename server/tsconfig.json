@@ -8,12 +8,11 @@
     "noUnusedParameters": true,
     "typeRoots": [
       "node_modules/@types",
-      "protos",
+      "src/proto",
     ]
   },
   "include": [
     "src/**/**.ts",
-    "test/**/**.ts"
   ],
   "exclude": [
     "node_modules"

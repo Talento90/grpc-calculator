@@ -13,8 +13,9 @@ func main() {
 	const address = "127.0.0.1:5000"
 
 	conn, err := grpc.Dial(address, grpc.WithInsecure())
+
 	if err != nil {
-		log.Fatalf("did not connect: %v", err)
+		log.Fatalf("Error connecting to grpc server: %v", err)
 	}
 
 	defer conn.Close()
@@ -30,7 +31,7 @@ func main() {
 	})
 
 	if err != nil {
-		log.Fatalf("error : %v", err)
+		log.Fatalf("Error : %v", err)
 	}
 
 	log.Printf("Result: %f", r.Result)
